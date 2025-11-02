@@ -21,7 +21,12 @@ public class CategoryServiceImpl implements CategoryService{
 //    private Long nextId=1L;
     @Override
     public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
+        List<Category> categories =categoryRepository.findAll();
+        if (categories.isEmpty()){
+            throw new ApiException("No categories to show");
+        }
+
+        return categories;
     }
 
     @Override
