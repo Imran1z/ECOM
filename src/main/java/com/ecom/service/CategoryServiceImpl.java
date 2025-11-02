@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService{
             throw new ApiException("No categories to show");
         }
 
-        return categories;
+        return categories ;
     }
 
     @Override
