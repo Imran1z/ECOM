@@ -8,6 +8,9 @@ import com.ecom.payload.CategoryResponse;
 import com.ecom.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,8 +29,12 @@ public class CategoryServiceImpl implements CategoryService{
 //    /private List<Category>categories =new ArrayList<>();
 //    private Long nextId=1L;
     @Override
-    public CategoryResponse getAllCategory() {
-        List<Category> categories =categoryRepository.findAll();
+    public CategoryResponse getAllCategory(Integer pageNumber, Integer pageSize) {
+
+        Pageable pageDetails = PageRequest.of(pageNumber,pageSize);
+        Page<Category> categoryPage=categoryRepository.findAll(pageDetails);
+
+        List<Category> categories =categoryPage.getContent();
         if (categories.isEmpty()){
             throw new ApiException("No categories to show");
         }
