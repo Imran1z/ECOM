@@ -24,10 +24,11 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public ProductDTO addProduct(Product product, Long categoryId) {
+    public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
         Category category=categoryRepository.findById(categoryId)
                 .orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
 
+        Product product=mapper.map(productDTO,Product.class);
         product.setImage("default.png");
         product.setCategory(category);
         product.setSpecialPrice(product.getPrice()-(product.getDiscount()*0.01)*product.getPrice());
@@ -84,5 +85,13 @@ public class ProductServiceImpl implements ProductService {
 
 
         return mapper.map(savedProduct,ProductDTO.class );
+    }
+
+    @Override
+    public ProductDTO deleteProduct(Long productId) {
+        Product savedProduct = productRepository.findById(productId).orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
+
+        productRepository.deleteById(productId);
+        return mapper.map(savedProduct,ProductDTO.class);
     }
 }

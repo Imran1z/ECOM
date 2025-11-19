@@ -16,10 +16,10 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/admin/categories/{categoryId}/product")
-    public ResponseEntity<ProductDTO> addProduct (@RequestBody Product product,
+    public ResponseEntity<ProductDTO> addProduct (@RequestBody ProductDTO productDTO,
                                                   @PathVariable Long categoryId){
-        ProductDTO productDTO = productService.addProduct(product,categoryId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
+        ProductDTO savedProductDTO = productService.addProduct(productDTO,categoryId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProductDTO);
     }
 
     @GetMapping("/public/products")
@@ -47,8 +47,10 @@ public class ProductController {
         return new ResponseEntity<>(savedProductDTO,HttpStatus.OK);
     }
 
-//    @PutMapping("/admin/products/{productId}")
-//    public String updateProduct(@PathVariable Long productId){
-//        return "hit";
-//    }
+    @DeleteMapping("/admin/products/{productId}")
+    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long productId){
+        ProductDTO productDTO=productService.deleteProduct(productId);
+
+        return new ResponseEntity<>(productDTO,HttpStatus.OK);
+    }
 }

@@ -6,7 +6,7 @@ import com.ecom.payload.ProductResponse;
 import org.springframework.stereotype.Service;
 
 public interface ProductService {
-    ProductDTO addProduct(Product product, Long categoryId);
+    ProductDTO addProduct(ProductDTO productDTO, Long categoryId);
 
     ProductResponse getAllProducts();
 
@@ -15,4 +15,6 @@ public interface ProductService {
     ProductResponse getProductsByKeyword(String keyword);
 
     ProductDTO updateProduct(ProductDTO productDTO,Long productId);
+
+    ProductDTO deleteProduct(Long productId);
 }
