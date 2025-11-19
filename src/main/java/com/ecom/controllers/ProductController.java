@@ -40,9 +40,15 @@ public class ProductController {
         return  ResponseEntity.status(HttpStatus.OK).body(productResponse);
     }
 
-    @PutMapping("/products/{productId}")
+    @PutMapping("/admin/products/{productId}")
     public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO productDTO,@PathVariable Long productId){
+//        System.out.println(productDTO);
         ProductDTO savedProductDTO =productService.updateProduct(productDTO,productId);
         return new ResponseEntity<>(savedProductDTO,HttpStatus.OK);
     }
+
+//    @PutMapping("/admin/products/{productId}")
+//    public String updateProduct(@PathVariable Long productId){
+//        return "hit";
+//    }
 }
