@@ -2,6 +2,7 @@ package com.ecom.controllers;
 
 import com.ecom.Model.Product;
 import com.ecom.payload.ProductDTO;
+import com.ecom.payload.ProductResponse;
 import com.ecom.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,5 +20,17 @@ public class ProductController {
                                                   @PathVariable Long categoryId){
         ProductDTO productDTO = productService.addProduct(product,categoryId);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
+    }
+
+    @GetMapping("/public/products")
+    public ResponseEntity<ProductResponse> GetAllProducts(){
+        ProductResponse productResponse= productService.getAllProducts();
+        return  ResponseEntity.status(HttpStatus.OK).body(productResponse);
+    }
+
+    @GetMapping("/public/categories/{categoryId}/products")
+    public ResponseEntity<ProductResponse> getProductsByCategory(@PathVariable Long categoryId){
+        ProductResponse productResponse= productService.getProductsByCategory(categoryId);
+        return  ResponseEntity.status(HttpStatus.OK).body(productResponse);
     }
 }
